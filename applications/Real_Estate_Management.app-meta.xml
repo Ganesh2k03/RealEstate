@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>Real Estate Property Management application.</description>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>Real Estate Management</label>
+    <navType>Standard</navType>
+    <tabs>Real_Estate_KPI_s</tabs>
+    <tabs>Property_Create</tabs>
+    <tabs>Property__c</tabs>
+    <tabs>Vendor__c</tabs>
+    <tabs>Tenant__c</tabs>
+    <tabs>Property_Tenant__c</tabs>
+    <tabs>Lease_Agreement__c</tabs>
+    <tabs>Maintenance_Request__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

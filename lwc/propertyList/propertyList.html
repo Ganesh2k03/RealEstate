@@ -1,0 +1,119 @@
+<template>
+    <lightning-card title="Property Listing" icon-name="custom:custom86">
+        <div slot="actions">
+            <lightning-button label="Refresh" icon-name="utility:refresh" onclick={handleRefresh}></lightning-button>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+
+            <!-- Filters row -->
+            <div class="slds-grid slds-gutters_xx-small slds-wrap slds-m-bottom_x-small">
+                <div class="slds-col slds-size_2-of-12">
+                    <lightning-input
+                        label="Search"
+                        type="search"
+                        placeholder="Name, city, address…"
+                        value={_searchKey}
+                        onchange={handleSearchChange}
+                    ></lightning-input>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <lightning-combobox
+                        label="Status"
+                        value={_status}
+                        options={statusOptions}
+                        onchange={handleStatusChange}
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <lightning-combobox
+                        label="Type"
+                        value={_type}
+                        options={typeOptions}
+                        onchange={handleTypeChange}
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <lightning-combobox
+                        label="Furnishing"
+                        value={_furnishing}
+                        options={furnishingOptions}
+                        onchange={handleFurnishingChange}
+                    ></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-input
+                        label="Min Rent"
+                        type="number"
+                        value={_uiMinPrice}
+                        onchange={handleMinPrice}
+                    ></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-input
+                        label="Max Rent"
+                        type="number"
+                        value={_uiMaxPrice}
+                        onchange={handleMaxPrice}
+                    ></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-input
+                        label="Within (km)"
+                        type="number"
+                        value={_uiDist}
+                        onchange={handleDistanceChange}
+                    ></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-12 slds-align-bottom">
+                    <lightning-button-icon
+                        icon-name="utility:location"
+                        alternative-text="Use my location"
+                        title="Use my location"
+                        onclick={handleUseLocation}
+                        class="slds-m-right_xx-small"
+                    ></lightning-button-icon>
+                    <lightning-button-icon
+                        icon-name="utility:clear"
+                        alternative-text="Reset filters"
+                        title="Reset filters"
+                        onclick={handleResetFilters}
+                    ></lightning-button-icon>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrap">
+                <template lwc:if={loading}>
+                    <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                </template>
+                <lightning-datatable
+                    key-field="Id"
+                    data={records}
+                    columns={columns}
+                    hide-checkbox-column
+                    resize-column-disabled
+                ></lightning-datatable>
+            </div>
+
+            <!-- Pagination -->
+            <div class="slds-grid slds-grid_align-spread slds-m-top_x-small">
+                <span class="slds-text-body_small slds-text-color_weak">{pagingLabel}</span>
+                <div>
+                    <lightning-button
+                        label="Previous"
+                        disabled={disablePrev}
+                        onclick={handlePrev}
+                        class="slds-m-right_x-small"
+                    ></lightning-button>
+                    <lightning-button
+                        label="Next"
+                        variant="brand"
+                        disabled={disableNext}
+                        onclick={handleNext}
+                    ></lightning-button>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

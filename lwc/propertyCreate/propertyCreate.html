@@ -1,0 +1,158 @@
+<template>
+    <lightning-card title="Create Property" icon-name="custom:custom86">
+        <div class="slds-p-around_medium">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                    <lightning-input
+                        label="Property Name"
+                        data-field="Name"
+                        value={form.Name}
+                        onchange={handleInput}
+                        required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                    <lightning-input
+                        label="Rent"
+                        data-field="Rent__c"
+                        type="number"
+                        formatter="currency"
+                        value={form.Rent__c}
+                        onchange={handleInput}
+                        required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-input
+                        label="Address"
+                        data-field="Address__c"
+                        value={form.Address__c}
+                        onchange={handleInput}
+                        required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="3" padding="around-small">
+                    <lightning-input
+                        label="City"
+                        data-field="City__c"
+                        value={form.City__c}
+                        onchange={handleInput}
+                        required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="3" padding="around-small">
+                    <lightning-input
+                        label="State"
+                        data-field="State__c"
+                        value={form.State__c}
+                        onchange={handleInput}
+                        required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="3" padding="around-small">
+                    <lightning-input
+                        label="Postal Code"
+                        data-field="Postal_Code__c"
+                        value={form.Postal_Code__c}
+                        onchange={handleInput}
+                        required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="3" padding="around-small">
+                    <lightning-input
+                        label="Country"
+                        data-field="Country__c"
+                        value={form.Country__c}
+                        onchange={handleInput}
+                        required
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="4" padding="around-small">
+                    <lightning-combobox
+                        label="Type"
+                        data-field="Type__c"
+                        value={form.Type__c}
+                        options={typeOptions}
+                        onchange={handleComboChange}
+                        required
+                    ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="4" padding="around-small">
+                    <lightning-combobox
+                        label="Furnishing Status"
+                        data-field="Furnishing_Status__c"
+                        value={form.Furnishing_Status__c}
+                        options={furnishingOptions}
+                        onchange={handleComboChange}
+                    ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="4" padding="around-small">
+                    <lightning-combobox
+                        label="Status"
+                        data-field="Status__c"
+                        value={form.Status__c}
+                        options={statusOptions}
+                        onchange={handleComboChange}
+                        required
+                    ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-textarea
+                        label="Description"
+                        data-field="Description__c"
+                        value={form.Description__c}
+                        onchange={handleInput}
+                        required
+                    ></lightning-textarea>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" padding="around-small">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label">
+                            <abbr class="slds-required" title="required">*</abbr> Property Images
+                        </label>
+                        <div class="slds-form-element__control">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                onchange={handleFileSelect}
+                            />
+                        </div>
+                        <template lwc:if={hasImages}>
+                            <ul class="slds-list_dotted slds-m-top_x-small">
+                                <template for:each={images} for:item="img" for:index="idx">
+                                    <li key={img.fileName} class="slds-m-bottom_x-small">
+                                        {img.fileName}
+                                        <lightning-button-icon
+                                            icon-name="utility:delete"
+                                            data-idx={idx}
+                                            onclick={handleRemoveImage}
+                                            alternative-text="Remove"
+                                        ></lightning-button-icon>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template lwc:else>
+                            <p class="slds-text-color_error slds-m-top_x-small">
+                                At least one image is required to create a property.
+                            </p>
+                        </template>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+
+            <div class="slds-m-top_medium slds-grid slds-grid_align-end">
+                <lightning-button
+                    label="Create Property"
+                    variant="brand"
+                    disabled={submitDisabled}
+                    onclick={handleSubmit}
+                ></lightning-button>
+            </div>
+            <template lwc:if={saving}>
+                <lightning-spinner alternative-text="Saving"></lightning-spinner>
+            </template>
+        </div>
+    </lightning-card>
+</template>

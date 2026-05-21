@@ -1,0 +1,50 @@
+<template>
+    <lightning-card title="Location" icon-name="utility:location">
+
+        <div slot="actions">
+            <lightning-button
+                label={geocodeBtnLabel}
+                icon-name="utility:refresh"
+                disabled={geocodeBtnDisabled}
+                onclick={handleRefreshLocation}
+                title="Re-geocode property address and update the map pin"
+            ></lightning-button>
+        </div>
+
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <!-- Loading / geocoding spinner -->
+            <template lwc:if={showSpinner}>
+                <div class="slds-align_absolute-center slds-p-around_medium">
+                    <lightning-spinner alternative-text="Loading map..." size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error state -->
+            <template lwc:if={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+
+            <!-- Map -->
+            <template lwc:if={hasMarkers}>
+                <lightning-map
+                    map-markers={markerVar}
+                    center={mapCenter}
+                    zoom-level="14"
+                    list-view="hidden"
+                    style="height:320px;"
+                ></lightning-map>
+            </template>
+
+            <!-- No location -->
+            <template lwc:if={showEmpty}>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-around_medium">
+                    No location data yet. Click <strong>Refresh Location</strong> to geocode the address.
+                </p>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

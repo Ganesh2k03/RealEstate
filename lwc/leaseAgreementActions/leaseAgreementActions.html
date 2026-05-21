@@ -1,0 +1,52 @@
+<template>
+    <lightning-card title="Lease Agreement Actions" icon-name="standard:contract">
+        <div class="slds-p-around_small">
+
+            <!-- Error -->
+            <template lwc:if={leaseErr}>
+                <p class="slds-text-color_error slds-text-body_small slds-m-bottom_x-small">{leaseErr}</p>
+            </template>
+
+            <!-- Status + email summary -->
+            <template lwc:if={leaseLoaded}>
+                <p class="slds-text-body_small slds-m-bottom_small info-bar">
+                    <strong>Status:</strong> {lease.Status__c}
+                    &nbsp;|&nbsp;
+                    <strong>Tenant email:</strong>
+                    <template lwc:if={tenantEmail}>{tenantEmail}</template>
+                    <template lwc:else><span class="slds-text-color_error"> — not set</span></template>
+                </p>
+            </template>
+
+            <!-- Loading -->
+            <template lwc:if={showLoadingMsg}>
+                <p class="slds-text-color_weak slds-text-body_small slds-m-bottom_x-small">Loading…</p>
+            </template>
+
+            <!-- Buttons — compact, side by side, no large gap -->
+            <div class="btn-row">
+                <lightning-button
+                    label="Download PDF"
+                    icon-name="utility:download"
+                    disabled={buttonsDisabled}
+                    onclick={handleDownload}
+                ></lightning-button>
+                <lightning-button
+                    label="Send to Tenant"
+                    variant="brand"
+                    icon-name="utility:email"
+                    disabled={buttonsDisabled}
+                    onclick={handleSend}
+                ></lightning-button>
+            </div>
+
+            <!-- Sending spinner -->
+            <template lwc:if={loading}>
+                <div class="slds-align_absolute-center slds-m-top_x-small">
+                    <lightning-spinner alternative-text="Sending…" size="small"></lightning-spinner>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

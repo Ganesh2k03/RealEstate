@@ -1,0 +1,11 @@
+.info-bar {
+    background: #f3f3f3;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+
+.btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}

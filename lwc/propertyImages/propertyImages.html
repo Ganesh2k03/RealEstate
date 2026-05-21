@@ -1,0 +1,52 @@
+<template>
+    <lightning-card title="Property Images" icon-name="utility:image">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <!-- Loading -->
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-p-around_medium">
+                    <lightning-spinner alternative-text="Loading images..." size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error -->
+            <template lwc:if={errorMessage}>
+                <p class="slds-text-color_error">{errorMessage}</p>
+            </template>
+
+            <!-- Thumbnail grid -->
+            <template lwc:if={hasImages}>
+                <div class="img-grid">
+                    <template for:each={imageUrls} for:item="img">
+                        <div key={img.key} class="img-cell" data-idx={img.idx}
+                             onclick={handleThumbnailClick}>
+                            <img src={img.url} alt={img.alt} class="img-thumb" />
+                        </div>
+                    </template>
+                </div>
+                <p class="slds-text-color_weak slds-text-body_small slds-m-top_x-small">
+                    {imageCount} image(s) — click to enlarge
+                </p>
+            </template>
+
+            <!-- No images -->
+            <template lwc:if={showEmpty}>
+                <p class="slds-text-color_weak slds-text-align_center slds-p-around_medium">
+                    No images uploaded for this property.
+                </p>
+            </template>
+        </div>
+    </lightning-card>
+
+    <!-- Lightbox overlay -->
+    <template lwc:if={lightboxOpen}>
+        <div class="lightbox-backdrop" onclick={closeLightbox}>
+            <div class="lightbox-box" onclick={stopProp}>
+                <button class="lightbox-close" onclick={closeLightbox} title="Close">✕</button>
+                <button class="lightbox-nav lightbox-prev" onclick={prevImage} title="Previous">‹</button>
+                <img src={activeUrl} alt={activeAlt} class="lightbox-img" />
+                <button class="lightbox-nav lightbox-next" onclick={nextImage} title="Next">›</button>
+            </div>
+        </div>
+    </template>
+</template>
